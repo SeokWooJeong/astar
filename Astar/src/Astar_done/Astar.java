@@ -11,6 +11,10 @@ public class Astar {
 	static Dot blockDot;
 	static PointList findPath = new PointList();
 	Astar(Map m) {
+		openList = new PointList();
+		closeList = new PointList();
+		 findPath = new PointList();
+		 blockList = new LinkedList<>();
 		int tempH;
 		int tempG;
 		int tempF;
@@ -21,12 +25,11 @@ public class Astar {
 				if (m.getMap(i, j) == 0) {
 					continue;
 				} else if (m.getMap(i, j) == 1) {
-					blockDot = new Dot(i, j);
-					blockList.add(blockDot);
+					blockList.add(new Dot(i, j));
 				} else if (m.getMap(i, j) == 2) {
 					// start 정보 추가
 					startDot = new Dot(i, j);
-//					blockList.add(startDot);
+					blockList.add(new Dot(i, j));
 				} else if (m.getMap(i, j) == 3) {
 					// end 정보 추가
 					endDot = new Dot(i, j);
@@ -45,8 +48,7 @@ public class Astar {
 			// 탐색된 이동경로의 h와 g 그리고 f=g+h를 연산하여 오픈 리스트 삽입
 			for(Dot tempDot : tempDotList) {
 				//h구하기
-				tempH = getH(endDot, new Dot(tempDot.getX(),tempDot.getY()));
-//				tempH = getH(endDot, tempDot);
+				tempH = getH(endDot, tempDot);
 				tempG=point.getG()+1;
 				tempF=tempH+tempG;
 				openList.add(new Point(tempG, tempH,tempF,new Dot(tempDot.getX(),tempDot.getY()), new Dot(point.getCurDot().getX(),point.getCurDot().getY())));
@@ -121,6 +123,23 @@ public class Astar {
 		}
 		tempDot = new Dot(curDot.getX(), curDot.getY() + 1);
 		if (tempDot.getY() < mapSize && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot)) {
+			tempList.add(new Dot(tempDot.getX(), tempDot.getY()));
+		}
+//===================================================================
+		tempDot = new Dot(curDot.getX() + 1, curDot.getY()+1);
+		if (tempDot.getY() < mapSize&&tempDot.getX() < mapSize && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot)) {
+			tempList.add(new Dot(tempDot.getX(), tempDot.getY()));
+		}
+		tempDot = new Dot(curDot.getX() + 1, curDot.getY()-1);
+		if (tempDot.getY() >= 0  &&tempDot.getX() < mapSize && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot)) {
+			tempList.add(new Dot(tempDot.getX(), tempDot.getY()));
+		}
+		tempDot = new Dot(curDot.getX()-1, curDot.getY() + 1);
+		if (tempDot.getY() < mapSize&&tempDot.getX() >= 0 && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot)) {
+			tempList.add(new Dot(tempDot.getX(), tempDot.getY()));
+		}
+		tempDot = new Dot(curDot.getX()-1, curDot.getY() - 1);
+		if (tempDot.getX() >= 0  &&tempDot.getY() >= 0  && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot)) {
 			tempList.add(new Dot(tempDot.getX(), tempDot.getY()));
 		}
 
