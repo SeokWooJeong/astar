@@ -97,6 +97,15 @@ public class Astar {
 		else return false;
 		
 	}
+	
+	public static boolean isInOpenList(Dot dot) {
+		for(Point item : openList) {
+			if(isEqualDot(item.getCurDot(), dot)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public static int getH(Dot endDot, Dot curDot) {
 		int h=0;
@@ -110,36 +119,36 @@ public class Astar {
 
 		Dot tempDot = new Dot(curDot.getX() - 1, curDot.getY());
 		Dot lastCloseDot = closeList.get(closeList.size()-1).getParDot();
-		if (tempDot.getX() >= 0 && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot)) {
+		if (tempDot.getX() >= 0 && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot) && !isInOpenList(tempDot)) {
 			tempList.add(new Dot(tempDot.getX(), tempDot.getY()));
 		}
 		tempDot = new Dot(curDot.getX() + 1, curDot.getY());
-		if (tempDot.getX() < mapSize && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot)) {
+		if (tempDot.getX() < mapSize && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot) && !isInOpenList(tempDot)) {
 			tempList.add(new Dot(tempDot.getX(), tempDot.getY()));
 		}
 		tempDot = new Dot(curDot.getX(), curDot.getY() - 1);
-		if (tempDot.getY() >= 0 && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot)) {
+		if (tempDot.getY() >= 0 && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot) && !isInOpenList(tempDot)) {
 			tempList.add(new Dot(tempDot.getX(), tempDot.getY()));
 		}
 		tempDot = new Dot(curDot.getX(), curDot.getY() + 1);
-		if (tempDot.getY() < mapSize && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot)) {
+		if (tempDot.getY() < mapSize && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot) && !isInOpenList(tempDot)) {
 			tempList.add(new Dot(tempDot.getX(), tempDot.getY()));
 		}
 //===================================================================
 		tempDot = new Dot(curDot.getX() + 1, curDot.getY()+1);
-		if (tempDot.getY() < mapSize&&tempDot.getX() < mapSize && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot)) {
+		if (tempDot.getY() < mapSize&&tempDot.getX() < mapSize && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot) && !isInOpenList(tempDot)) {
 			tempList.add(new Dot(tempDot.getX(), tempDot.getY()));
 		}
 		tempDot = new Dot(curDot.getX() + 1, curDot.getY()-1);
-		if (tempDot.getY() >= 0  &&tempDot.getX() < mapSize && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot)) {
+		if (tempDot.getY() >= 0  &&tempDot.getX() < mapSize && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot) && !isInOpenList(tempDot)) {
 			tempList.add(new Dot(tempDot.getX(), tempDot.getY()));
 		}
 		tempDot = new Dot(curDot.getX()-1, curDot.getY() + 1);
-		if (tempDot.getY() < mapSize&&tempDot.getX() >= 0 && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot)) {
+		if (tempDot.getY() < mapSize&&tempDot.getX() >= 0 && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot) && !isInOpenList(tempDot)) {
 			tempList.add(new Dot(tempDot.getX(), tempDot.getY()));
 		}
 		tempDot = new Dot(curDot.getX()-1, curDot.getY() - 1);
-		if (tempDot.getX() >= 0  &&tempDot.getY() >= 0  && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot)) {
+		if (tempDot.getX() >= 0  &&tempDot.getY() >= 0  && !isBlock(tempDot) && !isEqualDot(tempDot, lastCloseDot) && !isInOpenList(tempDot)) {
 			tempList.add(new Dot(tempDot.getX(), tempDot.getY()));
 		}
 
